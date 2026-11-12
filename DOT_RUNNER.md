@@ -1,5 +1,12 @@
 # Repeatable dot-cloud workflow
 
+The food adapter adds food mode; see
+[FOOD_ADAPTER.md](FOOD_ADAPTER.md) for its observed selector mapping, explicit
+planning-block requirement and normal-path cloud validation. Slot capture does
+not capture separate policy text or establish a pickup grace period. The default
+private output filename follows mode so a food capture does not replace a
+history snapshot merely because the operator changed modes.
+
 The cloud environment already has Python and the source files. No package installation is needed. The supported browser tool owns access to the existing signed-in browser. This project does not launch browsers, attach directly to CDP ports, export credentials, or automate login.
 
 1. In dot's browser tool, inspect current inventory with `await cua.getState()`. Select the exact existing ClassPass target using `let tab = await cua.getTab(actualId, {browser: actualBrowserId})` and inspect its current page. Use identifiers from the runtime rather than assuming `cdp` exists. Read current browser guidance. If REPL state reset, initialize it again. The supplied scripts require a `tab` binding.

@@ -1,8 +1,8 @@
 # Read-only history adapter
 
 Integrated with the version 6 planner; see [PLANNING_MVP.md](PLANNING_MVP.md)
-for the private-file data flow. The merged project has 42 Python tests and
-eight offline JavaScript tests. The original standalone test counts are
+for the private-file data flow. The integrated project has 54 Python tests and
+15 offline JavaScript tests. The original standalone test counts are
 historical. The merge does not infer missing years, categories or attendance.
 
 Run `capture_history.js` through the supported browser REPL with the existing authorized `https://classpass.com/profile/past` tab bound as `tab`. Read current browser documentation and inspect the page before capture. This is not a standalone Node browser client. The capture only reads rendered reservation/order cards and the displayed Past count. It does not click booking, rating, or account controls and exports no cookies, credentials, booking IDs, account name, images, or hidden application state.

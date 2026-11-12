@@ -5,6 +5,8 @@ __pycache__/
 !examples/synthetic-search.json
 !examples/synthetic-plan.json
 !examples/synthetic-history.json
+!examples/synthetic-food.json
+!examples/synthetic-food-plan.json
 *.html
 *.htm
 *.zip

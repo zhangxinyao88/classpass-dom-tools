@@ -1,5 +1,12 @@
 # ClassPass DOM Tools
 
+**Food item schedules:** see [FOOD_ADAPTER.md](FOOD_ADAPTER.md) for
+the separate studio/menu DOM contract, per-slot quotes, explicit planning blocks
+and remaining limits. The suite passes 54 Python and 15 JavaScript tests. A
+cloud browser-to-planner check read 26 food slots and selected one item without
+an order. Policy fields remained unknown, and the displayed duration was not
+treated as a pickup grace period.
+
 **Current MVP focus:** credit-use planning across classes, food, time windows
 and explicit/history-backed preferences. See [PLANNING_MVP.md](PLANNING_MVP.md)
 for the runnable offline planner and [MVP_RESEARCH.md](MVP_RESEARCH.md) for
@@ -20,7 +27,7 @@ This project is independent of ClassPass and is not affiliated with or endorsed 
 - Only cards present in the rendered DOM are captured. Results are partial snapshots, not guaranteed live inventory.
 - Displayed credits can be account-dependent and can change. Bookability remains unknown.
 - No sign-in automation, session export, bookings, cancellations, retries or access-challenge solving.
-- Forty-two Python tests and eight offline JavaScript tests pass. Cloud checks read 16 search cards and 100 of 126 past cards; a later runner passed fresh normalized history to the planner with an earlier search snapshot and test configuration. This is not a verified personal plan or refreshed search inventory; failure-branch checks use offline harnesses.
+- Fifty-four Python tests and fifteen offline JavaScript tests pass. Cloud checks read search cards, partial history and one food item's slots through supported browser tools. Planner checks used test configuration, not a verified personal plan; failure branches use offline harnesses and inventory freshness is not guaranteed.
 
 ## Offline quick start
 
@@ -61,6 +68,7 @@ These commands are offline. Python's parsed_at metadata changes per run; normali
 | parse-search | Validate and normalize captured search-card JSON. |
 | parse | Parse the supported English studio text/simple HTML format. Does not execute JavaScript. |
 | parse-history | Normalize rendered Past cards while preserving missing years and partial coverage. |
+| parse-food | Normalize one food item's per-slot quotes or an explicit app-only notice; requires the food DOM contract. |
 | filter | Filter normalized JSON by keyword and local start-time bounds. |
 | inspect-har | Inspect an existing local HAR offline; emit only redacted route shapes, methods, status and counts. Does not replay requests. |
 | fetch | Attempt one unauthenticated public-page GET. Stops on HTTP errors, including 403/429, and does not follow redirects or store cookies. |

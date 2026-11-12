@@ -120,7 +120,11 @@ See [DOT_RUNNER.md](DOT_RUNNER.md) for the supported-tool handoff recipe.
 After validation and filtering, at most 20 eligible opportunities are accepted.
 The exact bounded search respects budget, time overlap, gaps and maximum events.
 It first covers as much of the explicit spend target as possible, then favors
-explicit preference utility, then lower spend on a tie. Negative-preference
+explicit preference utility, then lower spend on a tie. Equivalent food slots
+count the lowest eligible group quote toward that
+reference coverage, so paying more for the same meal does not appear more
+valuable just to burn credits; actual budget and spending still use the selected
+quote. See FOOD_ADAPTER.md for this change and its validation limits. Negative-preference
 options are excluded so an expiry target does not force a known disliked choice.
 IDs resolve exact ties deterministically. More than 20 eligible options is a
 clear error requiring a narrower shortlist, not silent truncation.

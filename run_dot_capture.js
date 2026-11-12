@@ -2,12 +2,13 @@
 // Prerequisite: current browser instructions read, authorized target tab inspected,
 // and bound as `tab` inside cua_repl. Choose the mode and verified date/timezone.
 const project = '/absolute/path/to/classpass-dom-tools'; // Replace before running.
-const mode = 'history'; // 'history' or 'search'
-const output = '../private-captures/history.json';
-const day = null; // Required for search, e.g. verified YYYY-MM-DD.
-const timezone = null; // Required for search, e.g. America/New_York.
+const mode = 'history'; // 'history', 'search', or 'food'
+const output = '../private-captures/' + mode + '.json';
+const day = null; // Required for search/web food, e.g. verified YYYY-MM-DD.
+const timezone = null; // Required for search/web food, e.g. America/New_York.
+const foodBlockMinutes = null; // Required for a web food schedule; explicit planning occupancy.
 const quote = value => "'" + String(value).replaceAll("'", "'\\''") + "'";
-if (!['history','search'].includes(mode)) throw Error('Invalid capture mode');
+if (!['history','search','food'].includes(mode)) throw Error('Invalid capture mode');
 if (project === '/absolute/path/to/classpass-dom-tools' || !project.startsWith('/'))
   throw Error('Set the actual project directory before running this recipe');
 if (mode === 'search' && (!day || !timezone)) throw Error('Supply verified search date and timezone');
@@ -23,6 +24,10 @@ for(const c of result.content || []) if(c.type==='text') {
 if(captures.length!==1)throw Error('Expected exactly one capture; nothing saved');
 // JSON.stringify escapes embedded newlines, so data cannot terminate this heredoc.
 const payload=JSON.stringify(captures[0]);
-const extra=mode==='search'?' --date '+quote(day)+' --timezone '+quote(timezone):'';
+const needsFoodTime = mode === 'food' && captures[0].availability === 'web_schedule';
+if (needsFoodTime && (!day || !timezone || !Number.isInteger(foodBlockMinutes) || foodBlockMinutes < 1 || foodBlockMinutes > 180))
+  throw Error('Supply a verified food date/timezone and explicit planning block');
+let extra = mode === 'search' || needsFoodTime ? ' --date '+quote(day)+' --timezone '+quote(timezone) : '';
+if (needsFoodTime) extra += ' --block-minutes ' + quote(foodBlockMinutes);
 const saved=await tools.exec_command({cmd:'python3 ingest_capture.py '+mode+' --output '+quote(output)+extra+" <<'CAPTURE_JSON'\n"+payload+'\nCAPTURE_JSON',workdir:project,max_output_tokens:1000});
 text(saved);

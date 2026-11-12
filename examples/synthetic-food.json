@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "capture_type": "food_item_schedule",
+  "source_url": "https://classpass.com/studios/example-food-venue",
+  "captured_at": "2026-11-12T00:00:00Z",
+  "venue": "Example Cafe",
+  "availability": "web_schedule",
+  "item_name": "Example Lunch Bowl",
+  "date_heading": "Fri, Nov 13",
+  "policy_text": "Food orders cannot be cancelled. Credits will not be refunded.",
+  "rows": [
+    {"time_text": "12:00 PM EST 60 min", "credits_text": "6 credits", "action_disabled": false},
+    {"time_text": "12:30 PM EST 60 min", "credits_text": "6 credits", "action_disabled": false},
+    {"time_text": "1:00 PM EST 60 min", "credits_text": "6 credits", "action_disabled": false}
+  ]
+}

@@ -4,17 +4,20 @@ import argparse,json,os,sys,tempfile
 from pathlib import Path
 from classpass_cli import parse_search
 from history_adapter import parse_history
+from food_adapter import parse_food
 
 def main():
  p=argparse.ArgumentParser(description=__doc__)
- p.add_argument('kind',choices=['history','search']);p.add_argument('--output',required=True)
- p.add_argument('--date');p.add_argument('--timezone');a=p.parse_args()
+ p.add_argument('kind',choices=['history','search','food']);p.add_argument('--output',required=True)
+ p.add_argument('--date');p.add_argument('--timezone');p.add_argument('--block-minutes',type=int);a=p.parse_args()
  try:
   raw=sys.stdin.buffer.read(5*1024*1024+1)
   if len(raw)>5*1024*1024: raise ValueError()
   data=json.loads(raw)
   if a.kind=='search' and not (a.date and a.timezone):raise ValueError()
-  normalized=parse_history(data) if a.kind=='history' else parse_search(data,a.date,a.timezone)
+  if a.kind=='history':normalized=parse_history(data)
+  elif a.kind=='food':normalized=parse_food(data,a.date,a.timezone,a.block_minutes)
+  else:normalized=parse_search(data,a.date,a.timezone)
   path=Path(a.output);parent=path.parent
   parent.mkdir(mode=0o700,parents=True,exist_ok=True)
   if parent.stat().st_mode & 0o077:raise ValueError()
@@ -24,8 +27,9 @@ def main():
    os.replace(tmp,path)
   finally:
    if os.path.exists(tmp):os.unlink(tmp)
-  summary={'kind':a.kind,'count':len(normalized.get('items',normalized.get('classes',[]))), 'saved':True}
+  summary={'kind':a.kind,'count':len(normalized.get('opportunities',normalized.get('items',normalized.get('classes',[])))), 'saved':True}
   if a.kind=='history':summary.update(displayed_total=normalized['displayed_total'],complete_history=normalized['complete_history'])
+  if a.kind=='food':summary.update(availability=normalized['availability'],complete_results=False)
   print(json.dumps(summary));return 0
  except (ValueError,TypeError,KeyError,AttributeError,OSError):
   print(json.dumps({'error':'Capture rejected or private output unavailable.'}),file=sys.stderr);return 2

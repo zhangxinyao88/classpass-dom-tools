@@ -13,6 +13,7 @@ from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from history_adapter import parse_history
+from food_adapter import parse_food
 
 MAX_BYTES = 5 * 1024 * 1024
 
@@ -250,6 +251,11 @@ def main():
     ds.add_argument('--timezone', required=True)
     hs = sub.add_parser('parse-history', help='Normalize captured past cards; preserve unknown years and completeness')
     hs.add_argument('file')
+    fs = sub.add_parser('parse-food', help='Normalize one rendered food item schedule or app-only notice')
+    fs.add_argument('file')
+    fs.add_argument('--date', help='Caller-verified YYYY-MM-DD for a web schedule')
+    fs.add_argument('--timezone', help='Caller-verified IANA timezone')
+    fs.add_argument('--block-minutes', type=int, help='Explicit planning occupancy, not a pickup deadline')
     h = sub.add_parser('inspect-har', help='Offline route inventory, with all values and bodies omitted')
     h.add_argument('file')
     q = sub.add_parser('filter', help='Filter parsed JSON locally; no network')
@@ -268,6 +274,8 @@ def main():
             result = parse_search(json.loads(read_text(a.file)), a.date, a.timezone)
         elif a.command == 'parse-history':
             result = parse_history(json.loads(read_text(a.file)))
+        elif a.command == 'parse-food':
+            result = parse_food(json.loads(read_text(a.file)), a.date, a.timezone, a.block_minutes)
         elif a.command == 'inspect-har':
             result = inspect_har(json.loads(read_text(a.file)))
         else:
