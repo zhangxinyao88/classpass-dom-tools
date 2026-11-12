@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "source_url": "https://classpass.com/profile/past",
+  "captured_at": "2026-11-12T00:00:00Z",
+  "displayed_total": 3,
+  "rows": [
+    {"kind": "reservation", "name": "Example Yin Session", "studio": "Example Yoga Studio", "date_text": "Feb 29, 1:00 PM", "credits_text": "4 credits", "instructor": "Example Instructor", "rating_text": "Rated 5 stars out of 5"},
+    {"kind": "order", "name": "Example Coffee Pickup", "studio": "Example Cafe", "date_text": "Nov 1, 2:00 PM", "credits_text": "2 credits", "instructor": null, "rating_text": null}
+  ]
+}

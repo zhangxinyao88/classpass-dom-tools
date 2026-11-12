@@ -1,0 +1,23 @@
+Synthetic fixture. All studio, class and instructor values below are invented.
+
+# Example Fitness Studio
+
+## Schedule
+Wed, Nov 11
+
+3:00 PM PST 50 min
+### Example Lift Session (50 min)
+Example Instructor A
+See pricing
+
+4:10 PM PST 50 min
+### Example Lift Session (50 min)
+Example Instructor A
+See pricing
+
+5:20 PM PST 50 min
+### Example Lift Session (50 min)
+Example Instructor B
+See pricing
+
+See next day

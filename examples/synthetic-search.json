@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "source_url": "https://classpass.com/search/example-city/yoga-classes/example",
+  "captured_at": "2026-11-12T00:00:00Z",
+  "heading": "Live sessions for Fri, Nov 13",
+  "rows": [
+    {
+      "name": "Example Yin Session",
+      "studio": "Example Yoga Studio",
+      "instructor": "Example Instructor",
+      "class_path": "/classes/example-studio/yin/123",
+      "studio_path": "/studios/example-studio",
+      "time_text": "4:30 PM60 min",
+      "displayed_action": "Reserve Example Yin Session for 7 credits"
+    }
+  ]
+}
